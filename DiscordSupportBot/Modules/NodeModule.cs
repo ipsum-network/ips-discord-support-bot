@@ -21,7 +21,8 @@ namespace DiscordSupportBot.Modules
         {
             var result = JsonRpcClient.InvokeMethod("getinfo");
 
-            await this.ReplyAsync(JsonConvert.DeserializeObject<dynamic>(result).ToString());
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync($"{this.Context.Message.Author.Mention} {JsonConvert.DeserializeObject<dynamic>(result).ToString()}");
         }
 
         [Command("masternode")][Alias("mnstatus")]
@@ -33,7 +34,8 @@ namespace DiscordSupportBot.Modules
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
                 : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen}\nLast Paid: {result.LastPaid}```";
 
-            await this.ReplyAsync($"{this.Context.Message.Author.Mention} {resultString}");
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync($"{this.Context.Message.Author.Mention} {resultString}");
         }
 
         private Masternode GetMasternodeStatus(string pubKey)
