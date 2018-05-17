@@ -27,7 +27,7 @@
                 .AddSingleton(this.Commands)
                 .BuildServiceProvider();
 
-            var botToken = "";
+            var botToken = "NDQ2NjQzNTM0OTQzMDkyNzM2.Dd8Zcg.amWeUBS6t8UKcMJckf-dyE8sMBw";
 
             this.Client.Log += Log;
             this.Client.MessageReceived += HandleCommandAsync;
