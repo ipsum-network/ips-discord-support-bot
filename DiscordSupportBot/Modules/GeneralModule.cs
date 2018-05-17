@@ -19,6 +19,7 @@ namespace DiscordSupportBot.Modules
             builder.AddField("//help", "shows available commands");
             builder.AddField("//ipsum or //ips", "shows coin info");
             builder.AddField("//page or //website", "replies with website link");
+            builder.AddField("//price", "replies with current price on Graviex");
 
             await this.ReplyAsync(string.Empty, false, builder.Build());
         }
