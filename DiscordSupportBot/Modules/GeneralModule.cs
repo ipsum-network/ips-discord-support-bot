@@ -13,21 +13,20 @@ namespace DiscordSupportBot.Modules
         public async Task Help()
         {
             EmbedBuilder builder = new EmbedBuilder();
-            
+
             builder.WithTitle("Ipsum Bot Help")
-                .WithColor(Discord.Color.Blue);
-            builder.AddField("//help", "shows available commands");
-            builder.AddField("//ipsum or //ips", "shows coin info");
-            builder.AddField("//page or //website", "replies with website link");
-            builder.AddField("//guides or //guide", "replies with current installation guides");
+                .WithColor(Discord.Color.Blue)
+                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                .WithFooter("https://ipsum.network/")
 
-            await this.ReplyAsync(string.Empty, false, builder.Build());
-        }
+                .AddField("//help", "shows available commands")
+                .AddField("//ipsum or //ips", "shows coin info")
+                .AddField("//guides or //guide", "replies with current installation guides")
+                .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
+                .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price");
 
-        [Command("website")][Alias("page")]
-        public async Task WebSite()
-        {
-            await this.ReplyAsync($"{this.Context.Message.Author.Mention} https://ipsum.network", false);
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
         }
     }
 }

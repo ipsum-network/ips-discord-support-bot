@@ -73,8 +73,7 @@
 
                 if (!result.IsSuccess)
                 {
-                    Console.WriteLine(result.ErrorReason);
-                    await msg.Channel.SendMessageAsync($"{msg.Author.Mention} Sorry dude, unknown command");
+                    await msg.Channel.SendMessageAsync($"{msg.Author.Mention} Sorry dude, something went wrong, particularly: {result.ErrorReason}");
                 }
             }
         }
