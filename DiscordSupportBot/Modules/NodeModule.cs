@@ -14,28 +14,43 @@ namespace DiscordSupportBot.Modules
 
     public class NodeModule : ModuleBase<SocketCommandContext>
     {
-        private JsonRpc JsonRpcClient => new JsonRpc("url", new System.Net.NetworkCredential { UserName = "username", Password = "password"});
+        private JsonRpc JsonRpcClient => new JsonRpc("url", new System.Net.NetworkCredential { UserName = "username", Password = "password" });
 
         [Command("info")]
-        public async Task GetInfo()
+        public async Task Info()
         {
             var result = JsonRpcClient.InvokeMethod("getinfo");
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync($"{this.Context.Message.Author.Mention} {JsonConvert.DeserializeObject<dynamic>(result).ToString()}");
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                .SendMessageAsync($"{JsonConvert.DeserializeObject<dynamic>(result).ToString()}");
         }
 
-        [Command("masternode")][Alias("mnstatus")]
+        [Command("masternode")]
+        [Alias("mnstatus")]
         public async Task MnStatus(string pubKey)
         {
             var result = this.GetMasternodeStatus(pubKey);
 
-            var resultString = result == null
+            var resultString = result.Success
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
-                : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen}\nLast Paid: {result.LastPaid}```";
+                : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTime()}```";
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync($"{this.Context.Message.Author.Mention} {resultString}");
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                .SendMessageAsync($"{resultString}");
+        }
+
+        [Command("mnconnect")]
+        [Alias("mnconstatus")]
+        public async Task MnConnectionStatus(string ipPort)
+        {
+            var result = this.GetMasternodeConnectionStatus(ipPort);
+
+            var resultString = result.Success
+                ? $"```Connection to {ipPort} was successful!```"
+                : $"```Connection to {ipPort} was unsuccessul, reason: {result.Error.Message}```";
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                .SendMessageAsync($"{resultString}");
         }
 
         private Masternode GetMasternodeStatus(string pubKey)
@@ -46,6 +61,14 @@ namespace DiscordSupportBot.Modules
             var node = masternodesParsed.Masternodes.FirstOrDefault(mn => mn.Address.Equals(pubKey));
 
             return node;
+        }
+
+        private ResponseBase GetMasternodeConnectionStatus(string ipPort)
+        {
+            var statusResponse = this.JsonRpcClient.InvokeMethod("masternode", new[] { "connect", ipPort });
+            var status = JsonConvert.DeserializeObject<ResponseBase>(statusResponse);
+
+            return status;
         }
     }
 }

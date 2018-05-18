@@ -27,7 +27,7 @@
                 .AddSingleton(this.Commands)
                 .BuildServiceProvider();
 
-            var botToken = "";
+            var botToken = "NDQ2NjQzNTM0OTQzMDkyNzM2.DeC89g.T-XdBRq_8V3TuVYQLabYIC2dwZ4";
 
             this.Client.Log += Log;
             this.Client.MessageReceived += HandleCommandAsync;
@@ -73,8 +73,7 @@
 
                 if (!result.IsSuccess)
                 {
-                    Console.WriteLine(result.ErrorReason);
-                    await msg.Channel.SendMessageAsync($"{msg.Author.Mention} Sorry dude, unknown command");
+                    await msg.Channel.SendMessageAsync($"{msg.Author.Mention} Sorry dude, something went wrong, particularly: {result.ErrorReason}");
                 }
             }
         }

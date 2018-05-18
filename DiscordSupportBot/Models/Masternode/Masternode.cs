@@ -16,5 +16,7 @@ namespace DiscordSupportBot.Models.Masternode
         public int LastSeen { get; set; }
         public int ActiveTime { get; set; }
         public int LastPaid { get; set; }
+
+        public bool Success => !string.IsNullOrEmpty(this.Address);
     }
 }
