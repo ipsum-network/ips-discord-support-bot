@@ -3,7 +3,7 @@ namespace DiscordSupportBot.Modules
     using Discord;
     using Discord.Commands;
     using Discord.WebSocket;
-    using DiscordSupportBot.Models.General;
+ //   using DiscordSupportBot.Models.General;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -28,7 +28,8 @@ namespace DiscordSupportBot.Modules
                 .AddField("//ipsum or //ips", "shows coin info")
                 .AddField("//guides or //guide", "replies with current installation guides")
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
-                .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price");
+                .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price")
+                .AddField("//donate or //donations", "replies with Dev IPS and BTC donation address");
 
             await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
                 .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
