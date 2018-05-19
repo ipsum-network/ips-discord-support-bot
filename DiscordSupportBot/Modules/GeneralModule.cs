@@ -29,7 +29,8 @@ namespace DiscordSupportBot.Modules
                 .AddField("//guides or //guide", "replies with current installation guides")
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price")
-                .AddField("//donate or //donations", "replies with Dev IPS and BTC donation address");
+                .AddField("//donate or //donations", "replies with Dev IPS and BTC donation address")
+                .AddField("//build or //version", "replies with current wallet realse link");
 
             await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
                 .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
