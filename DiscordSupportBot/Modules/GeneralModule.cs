@@ -27,6 +27,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("//ipsum or //ips", "shows coin info")
                 .AddField("//guides or //guide", "replies with current installation guides")
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
+                .AddField("//mnconnect <ip:port>", "checks the connection status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
