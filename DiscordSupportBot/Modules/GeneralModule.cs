@@ -62,8 +62,7 @@ namespace DiscordSupportBot.Modules
             }
             else
             {
-                await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                    .SendMessageAsync($"not enough permissions for the command!");
+                await this.Context.Message.Author.SendMessageAsync($"not enough permissions for the usage of poll command!");
             }
         }
 
