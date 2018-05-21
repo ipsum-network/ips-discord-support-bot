@@ -3,15 +3,20 @@ namespace DiscordSupportBot.Modules
     using Discord;
     using Discord.Commands;
     using Discord.WebSocket;
+    using DiscordSupportBot.Common;
+    using DiscordSupportBot.Models.Exchanges;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
 
     public class GeneralModule : ModuleBase<SocketCommandContext>
     {
         private string[] VoteOptions = { "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣", "🔟" };
+        private static HttpClient client = new HttpClient();
 
         [Command("help")]
         public async Task Help()
@@ -66,6 +71,64 @@ namespace DiscordSupportBot.Modules
             }
         }
 
+        [Command("ipsum")]
+        [Alias("ips")]
+        public async Task Ipsum()
+        {
+            var data = this.GetGraviexData();
+
+            var builder = new EmbedBuilder();
+
+            builder.WithTitle("Ipsum [IPS]")
+                .WithDescription("\u200b")
+                .WithCurrentTimestamp()
+                .WithFooter("https://ipsum.network/")
+                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                .WithColor(Discord.Color.Blue);
+
+            if (data.Result.Success)
+            {
+                builder
+                    .AddInlineField("Time", $"{data.Result.TimeOfUpdate.ParseEpochToDateTime().ToString()}")
+                    .AddInlineField("Price", $"{data.Result.Ticker.Last.ToString()}")
+                    .AddInlineField("Volume BTC", $"{data.Result.Ticker.VolumeBtc.ToString()}");
+            }
+            else
+            {
+                builder
+                    .AddField("", "could not retrieve data from exchange");
+            }
+
+
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+        }
+
+        [Command("guide")]
+        [Alias("guides")]
+        public async Task Guide()
+        {
+            var builder = new EmbedBuilder();
+
+            builder.WithTitle("Master List of Guides")
+                .WithColor(Discord.Color.Blue)
+                .WithDescription("\u200b")
+                .WithUrl("https://github.com/ipsum-network/guides")
+                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+
+                .AddField("PLEASE UPGRADE TO NEW WALLET VERSION ASAP", "https://github.com/ipsum-network/guides/blob/master/v3.1-UPDATE.md")
+                .AddField("Linux Wallet Installation", "https://github.com/ipsum-network/guides/blob/master/LINUX-COLD.md")
+                .AddField("Windows Wallet with Linux Masternode VPS", "https://github.com/ipsum-network/guides/blob/master/IPSUM-MN-GUIDE-WINDOWS-LINUX-VPS-SERVER.md")
+                .AddField("Configuration Seed List", "https://github.com/ipsum-network/seeds");
+
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+        }
+
         private string GetVoteOptions(string[] options)
         {
             var result = string.Empty;
@@ -74,6 +137,14 @@ namespace DiscordSupportBot.Modules
             {
                 result += $"\n{this.VoteOptions[i]} - {options[i]}";
             }
+
+            return result;
+        }
+
+        public async Task<Graviex> GetGraviexData()
+        {
+            var response = await client.GetStringAsync($"https://graviex.net:443//api/v2/tickers/ipsbtc.json");
+            var result = JsonConvert.DeserializeObject<Graviex>(response.ToString());
 
             return result;
         }
