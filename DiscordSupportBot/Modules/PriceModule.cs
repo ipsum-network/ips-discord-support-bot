@@ -41,8 +41,10 @@ namespace DiscordSupportBot.Modules
                     : $"```Currency: {prices.CoinData.Name}\nTicker: {prices.CoinData.Symbol}\nPrice USD: {prices.CoinData.Quotes.PriceUSD.Price}\nChange(24h): {prices.CoinData.Quotes.PriceUSD.PercentChange24h}%```"
                 : $"Could not get the price.";
 
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
             await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync($"{resultString}");
+                .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
         }
 
         public async Task<Listings> GetListings()

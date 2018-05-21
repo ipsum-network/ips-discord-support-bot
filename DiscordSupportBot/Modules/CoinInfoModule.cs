@@ -27,14 +27,26 @@
                 .WithCurrentTimestamp()
                 .WithFooter("https://ipsum.network/")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithColor(Discord.Color.Blue)
+                .WithColor(Discord.Color.Blue);
                  
-                .AddInlineField("Time", $"{(data.Result.Success ? data.Result.TimeOfUpdate.ParseEpochToDateTime().ToString() : "couldn't get the time of retrival")}")
-                .AddInlineField("Price", $"{(data.Result.Success ? data.Result.Ticker.Last.ToString() : "couldn't get the price")}")
-                .AddInlineField("Volume BTC", $"{(data.Result.Success ? data.Result.Ticker.VolumeBtc.ToString() : "couldn't get the volume")}");
+            if (data.Result.Success)
+            {
+                builder
+                    .AddInlineField("Time", $"{data.Result.TimeOfUpdate.ParseEpochToDateTime().ToString()}")
+                    .AddInlineField("Price", $"{data.Result.Ticker.Last.ToString()}")
+                    .AddInlineField("Volume BTC", $"{data.Result.Ticker.VolumeBtc.ToString()}");
+            }
+            else
+            {
+                builder
+                    .AddField("", "could not retrieve data from exchange");
+            }
+                
+
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
             await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync(string.Empty, false, builder.Build());
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
         public async Task<Graviex> GetGraviexData()

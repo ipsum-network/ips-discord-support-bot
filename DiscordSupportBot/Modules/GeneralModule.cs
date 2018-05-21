@@ -29,8 +29,10 @@ namespace DiscordSupportBot.Modules
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price");
 
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
             await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
         [Command("createpoll")]
