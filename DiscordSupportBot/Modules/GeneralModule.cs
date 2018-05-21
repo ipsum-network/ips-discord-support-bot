@@ -49,7 +49,7 @@ namespace DiscordSupportBot.Modules
                     .WithDescription(optionsList)
                     .WithColor(Discord.Color.Blue);
 
-                var message = await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                var message = await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotPollChannel)
                     .SendMessageAsync(string.Empty, false, builder.Build());
 
                 for (int i = 0; i < options.Length; i++)
