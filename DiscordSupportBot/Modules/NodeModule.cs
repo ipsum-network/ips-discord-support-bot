@@ -21,7 +21,7 @@ namespace DiscordSupportBot.Modules
         {
             var result = JsonRpcClient.InvokeMethod("getinfo");
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                 .SendMessageAsync($"{JsonConvert.DeserializeObject<dynamic>(result).ToString()}");
         }
 
@@ -31,11 +31,11 @@ namespace DiscordSupportBot.Modules
         {
             var result = this.GetMasternodeStatus(pubKey);
 
-            var resultString = result.Success
+            var resultString = result == null
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
                 : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTime()}```";
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                 .SendMessageAsync($"{resultString}");
         }
 
@@ -49,7 +49,7 @@ namespace DiscordSupportBot.Modules
                 ? $"```Connection to {ipPort} was successful!```"
                 : $"```Connection to {ipPort} was unsuccessul, reason: {result.Error.Message}```";
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                 .SendMessageAsync($"{resultString}");
         }
 

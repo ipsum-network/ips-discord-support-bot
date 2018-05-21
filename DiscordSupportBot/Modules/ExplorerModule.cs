@@ -25,7 +25,8 @@ namespace DiscordSupportBot.Modules
             builder.AddInlineField("Difficulty", result.Difficulty);
             builder.AddInlineField("Masternodes Count", result.MasternodeCount);
 
-            await this.ReplyAsync(string.Empty, false, builder.Build());
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(string.Empty, false, builder.Build());
         }
 
         [Command("balance")]

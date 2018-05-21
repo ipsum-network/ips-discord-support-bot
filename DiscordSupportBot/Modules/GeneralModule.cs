@@ -3,7 +3,6 @@ namespace DiscordSupportBot.Modules
     using Discord;
     using Discord.Commands;
     using Discord.WebSocket;
-    using DiscordSupportBot.Models.General;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -30,7 +29,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price");
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                 .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
         }
 
@@ -50,7 +49,7 @@ namespace DiscordSupportBot.Modules
                     .WithDescription(optionsList)
                     .WithColor(Discord.Color.Blue);
 
-                var message = await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                var message = await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                     .SendMessageAsync(string.Empty, false, builder.Build());
 
                 for (int i = 0; i < options.Length; i++)
@@ -60,7 +59,7 @@ namespace DiscordSupportBot.Modules
             }
             else
             {
-                await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                     .SendMessageAsync($"not enough permissions for the command!");
             }
         }

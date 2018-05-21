@@ -33,8 +33,8 @@
                 .AddInlineField("Price", $"{(data.Result.Success ? data.Result.Ticker.Last.ToString() : "couldn't get the price")}")
                 .AddInlineField("Volume BTC", $"{(data.Result.Success ? data.Result.Ticker.VolumeBtc.ToString() : "couldn't get the volume")}");
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
-                .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(string.Empty, false, builder.Build());
         }
 
         public async Task<Graviex> GetGraviexData()

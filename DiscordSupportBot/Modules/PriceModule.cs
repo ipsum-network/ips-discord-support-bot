@@ -41,7 +41,7 @@ namespace DiscordSupportBot.Modules
                     : $"```Currency: {prices.CoinData.Name}\nTicker: {prices.CoinData.Symbol}\nPrice USD: {prices.CoinData.Quotes.PriceUSD.Price}\nChange(24h): {prices.CoinData.Quotes.PriceUSD.PercentChange24h}%```"
                 : $"Could not get the price.";
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
                 .SendMessageAsync($"{resultString}");
         }
 

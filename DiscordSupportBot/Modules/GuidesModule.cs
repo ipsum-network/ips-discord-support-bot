@@ -12,11 +12,12 @@
 
         [Command("guide")]
         [Alias("guides")]
-        public async Task guide()
+        public async Task Guide()
         {
             var builder = new EmbedBuilder();
 
-            builder.WithTitle("Master List of Guides").WithColor(Discord.Color.Blue)
+            builder.WithTitle("Master List of Guides")
+                .WithColor(Discord.Color.Blue)
                 .WithDescription("\u200b")
                 .WithUrl("https://github.com/ipsum-network/guides")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
@@ -26,7 +27,8 @@
                 .AddField("Windows Wallet with Linux Masternode VPS", "https://github.com/ipsum-network/guides/blob/master/IPSUM-MN-GUIDE-WINDOWS-LINUX-VPS-SERVER.md")
                 .AddField("Configuration Seed List", "https://github.com/ipsum-network/seeds");
 
-            await this.ReplyAsync(string.Empty, false, builder.Build());
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(string.Empty, false, builder.Build());
         }
     }
 }
