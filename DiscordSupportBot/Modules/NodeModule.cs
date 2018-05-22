@@ -33,7 +33,7 @@ namespace DiscordSupportBot.Modules
 
             var resultString = result == null
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
-                : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTime()}```";
+                : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTimeLastPaid()}```";
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 

@@ -131,6 +131,43 @@ namespace DiscordSupportBot.Modules
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
+        [Command("donate")]
+        [Alias("donations")]
+        public async Task Donation()
+        {
+            var builder = new EmbedBuilder();
+
+            builder.WithTitle("")
+                .WithColor(Discord.Color.Blue)
+                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                .AddField("Donations will be used for:", "Exchange Listings, Development, and Infrastructure")
+                .AddField("IPS Donation Address:", "iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt")
+                .AddField("BTC Donation Address:", "1592K4xS5QkXDStELPk9nHBEqZ5vLNAyrm");
+
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+        }
+
+        [Command("build")]
+        [Alias("version")]
+        public async Task CurrentBuild()
+        {
+            var builder = new EmbedBuilder();
+
+            builder.WithTitle("The current build is on 3.1.0")
+                .WithColor(Discord.Color.Blue)
+                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                .WithDescription("\u200b")
+                .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
+
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+        }
+
         private string GetVoteOptions(string[] options)
         {
             var result = string.Empty;
@@ -150,41 +187,5 @@ namespace DiscordSupportBot.Modules
 
             return result;
         }
-
-
-        [Command("donate")]
-        [Alias("donations")]
-        public async Task Donation()
-        {
-            var builder = new EmbedBuilder();
-
-            builder.WithTitle("").WithColor(Discord.Color.Blue)
-                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                //Provided by 0x1
-                .AddField("Donations will be used for:", "Exchange Listings, Development, and Infrastructure")
-                //Dev IPS wallet provided by 0x1
-                .AddField("IPS Donation Address:", "iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt")
-                //Dev BTC wallet provided by 0x1
-                .AddField("BTC Donation Address:", "1592K4xS5QkXDStELPk9nHBEqZ5vLNAyrm");
-
-            await this.ReplyAsync(string.Empty, false, builder.Build());
-        }
-
-
-        [Command("build")]
-        [Alias("version")]
-        public async Task CurrentBuild()
-        {
-            var builder = new EmbedBuilder();
-
-            builder.WithTitle("The current build is on 3.1.0").WithColor(Discord.Color.Blue)
-                //Current community build 3.1.0
-                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithDescription("\u200b")
-                .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
-
-            await this.ReplyAsync(string.Empty, false, builder.Build());
-        }
-
     }
 }
