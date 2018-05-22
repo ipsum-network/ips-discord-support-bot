@@ -21,27 +21,21 @@ namespace DiscordSupportBot.Common
         public string InvokeMethod(string a_sMethod, params object[] a_params)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(this.Url);
-            webRequest.Credentials = Credentials;
+            webRequest.Credentials = this.Credentials;
 
             webRequest.ContentType = "application/json-rpc";
             webRequest.Method = "POST";
 
-            JObject joe = new JObject();
-            joe["jsonrpc"] = "1.0";
-            joe["id"] = "1";
-            joe["method"] = a_sMethod;
-
-            if (a_params != null)
+            JObject joe = new JObject
             {
-                if (a_params.Length > 0)
-                {
-                    JArray props = new JArray();
-                    foreach (var p in a_params)
-                    {
-                        props.Add(p);
-                    }
-                    joe.Add(new JProperty("params", props));
-                }
+                ["jsonrpc"] = "1.0",
+                ["id"] = "1",
+                ["method"] = a_sMethod
+            };
+
+            if (a_params != null && a_params.Length > 0)
+            {
+                joe.Add(new JProperty("params", new JArray { a_params }));
             }
 
             string s = JsonConvert.SerializeObject(joe);
@@ -58,13 +52,12 @@ namespace DiscordSupportBot.Common
             }
             catch (WebException we)
             {
-                //inner exception is socket
-                //{"A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 23.23.246.5:8332"}
                 Console.WriteLine(we.Message);
                 throw;
             }
 
             WebResponse webResponse = null;
+
             try
             {
                 using (webResponse = webRequest.GetResponse())
@@ -73,7 +66,6 @@ namespace DiscordSupportBot.Common
                     {
                         using (StreamReader sr = new StreamReader(str))
                         {
-                            // return JsonConvert.DeserializeObject<JObject>(sr.ReadToEnd().Replace(System.Environment.NewLine, ""));
                             return sr.ReadToEnd();
                         }
                     }
@@ -81,14 +73,10 @@ namespace DiscordSupportBot.Common
             }
             catch (WebException webex)
             {
-
                 using (Stream str = webex.Response.GetResponseStream())
                 {
                     using (StreamReader sr = new StreamReader(str))
                     {
-                        // var tempRet = JsonConvert.DeserializeObject<JObject>(sr.ReadToEnd().Replace(System.Environment.NewLine, ""));
-
-                        // return tempRet;
                         return sr.ReadToEnd();
                     }
                 }
