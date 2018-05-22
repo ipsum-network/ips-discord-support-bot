@@ -5,6 +5,7 @@ namespace DiscordSupportBot.Modules
     using Discord.WebSocket;
     using DiscordSupportBot.Common;
     using DiscordSupportBot.Models.Exchanges;
+    using DiscordSupportBot.Models.Github;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -154,13 +155,26 @@ namespace DiscordSupportBot.Modules
         [Alias("version")]
         public async Task CurrentBuild()
         {
+            var data = this.GetGithubReleaseData();
+
             var builder = new EmbedBuilder();
 
-            builder.WithTitle("The current build is on 3.1.0")
-                .WithColor(Discord.Color.Blue)
-                .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithDescription("\u200b")
-                .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
+            if (data.Result != null)
+            {
+                builder.WithTitle($"The current build is: {data.Result.ReleaseName} - {data.Result.TagName}")
+                    .WithColor(Discord.Color.Blue)
+                    .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                    .WithDescription("\u200b")
+                    .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
+            }
+            else
+            {
+                builder.WithTitle($"Bot was not able to get the latest version, please check the link below for latest release")
+                    .WithColor(Discord.Color.Blue)
+                    .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
+                    .WithDescription("\u200b")
+                    .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
+            }
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
@@ -184,6 +198,16 @@ namespace DiscordSupportBot.Modules
         {
             var response = await client.GetStringAsync($"https://graviex.net:443//api/v2/tickers/ipsbtc.json");
             var result = JsonConvert.DeserializeObject<Graviex>(response.ToString());
+
+            return result;
+        }
+
+        public async Task<GithubRelease> GetGithubReleaseData()
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "request");
+
+            var response = await client.GetStringAsync($"https://api.github.com/repos/ipsum-network/ips/releases/latest");
+            var result = JsonConvert.DeserializeObject<GithubRelease>(response.ToString());
 
             return result;
         }
