@@ -35,7 +35,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
                 .AddField("//mnconnect <ip:port>", "checks the connection status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price")
-                .AddField("//donate or //donations", "replies with Dev IPS and BTC donation address")
+                .AddField("//donate or //donations", "replies with IPS, BTC donation address and balances")
                 .AddField("//build <ticker> or //version", "replies with current wallet and masternode build");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
@@ -138,12 +138,18 @@ namespace DiscordSupportBot.Modules
         {
             var builder = new EmbedBuilder();
 
+            var dataBtc = this.GetBtcDonationAddressBalance("1592K4xS5QkXDStELPk9nHBEqZ5vLNAyrm");
+            var dataIps = this.GetIpsDonationAddressBalance("iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt");
+
             builder.WithTitle("")
                 .WithColor(Discord.Color.Blue)
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                 .AddField("Donations will be used for:", "Exchange Listings, Development, and Infrastructure")
                 .AddField("IPS Donation Address:", "iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt")
-                .AddField("BTC Donation Address:", "1592K4xS5QkXDStELPk9nHBEqZ5vLNAyrm");
+                .AddField("BTC Donation Address:", "1592K4xS5QkXDStELPk9nHBEqZ5vLNAyrm")
+                .AddField("\u200b", "\u200b")
+                .AddField("Current BTC donation balance:", $"{dataBtc.Result} BTC")
+                .AddField("Current IPS donation balance:", $"{dataIps.Result} IPS");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
@@ -194,7 +200,7 @@ namespace DiscordSupportBot.Modules
             return result;
         }
 
-        public async Task<Graviex> GetGraviexData()
+        private async Task<Graviex> GetGraviexData()
         {
             var response = await client.GetStringAsync($"https://graviex.net:443//api/v2/tickers/ipsbtc.json");
             var result = JsonConvert.DeserializeObject<Graviex>(response.ToString());
@@ -202,7 +208,7 @@ namespace DiscordSupportBot.Modules
             return result;
         }
 
-        public async Task<GithubRelease> GetGithubReleaseData()
+        private async Task<GithubRelease> GetGithubReleaseData()
         {
             client.DefaultRequestHeaders.Add("User-Agent", "request");
 
@@ -210,6 +216,20 @@ namespace DiscordSupportBot.Modules
             var result = JsonConvert.DeserializeObject<GithubRelease>(response.ToString());
 
             return result;
+        }
+
+        private async Task<decimal> GetBtcDonationAddressBalance(string address)
+        {
+            var response = await client.GetStringAsync($"https://blockchain.info/q/addressbalance/{address}");
+
+            return decimal.Parse(response, System.Globalization.NumberStyles.AllowDecimalPoint) / 100000000;
+        }
+
+        private async Task<decimal> GetIpsDonationAddressBalance(string address)
+        {
+            var response = await client.GetStringAsync($"https://explorer.ipsum.network/ext/getbalance/{address}");
+
+            return decimal.Parse(response, System.Globalization.NumberStyles.AllowDecimalPoint);
         }
     }
 }
