@@ -36,7 +36,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("//mnconnect <ip:port>", "checks the connection status of your masternode")
                 .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price")
                 .AddField("//donate or //donations", "replies with IPS, BTC donation address and balances")
-                .AddField("//build <ticker> or //version", "replies with current wallet and masternode build");
+                .AddField("//build", "replies with current wallet and masternode build");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
