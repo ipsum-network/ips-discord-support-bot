@@ -25,6 +25,7 @@
             this.Services = new ServiceCollection()
                 .AddSingleton(this.Client)
                 .AddSingleton(this.Commands)
+                .AddDbContext<DiscordSupportBot.DAL.Context.DiscordSupportBotDbContext>()
                 .BuildServiceProvider();
 
             var botToken = "";
