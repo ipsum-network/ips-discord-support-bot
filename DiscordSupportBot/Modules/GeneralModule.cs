@@ -122,9 +122,9 @@ namespace DiscordSupportBot.Modules
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
 
                 .AddField("PLEASE UPGRADE TO NEW WALLET VERSION ASAP", "https://github.com/ipsum-network/guides/blob/master/v3.1-UPDATE.md")
-                .AddField("Linux Wallet Installation", "https://github.com/ipsum-network/guides/blob/master/LINUX-COLD.md")
-                .AddField("Windows Wallet with Linux Masternode VPS", "https://github.com/ipsum-network/guides/blob/master/IPSUM-MN-GUIDE-WINDOWS-LINUX-VPS-SERVER.md")
-                .AddField("Configuration Seed List", "https://github.com/ipsum-network/seeds");
+                .AddField("Full list of all guides:", "https://github.com/ipsum-network/guides")
+                .AddField("Configuration Seed List:", "https://github.com/ipsum-network/seeds");
+
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
