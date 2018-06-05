@@ -27,21 +27,22 @@ namespace DiscordSupportBot.Modules
             builder.WithTitle("Ipsum Bot Help")
                 .WithColor(Discord.Color.Blue)
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithFooter("https://ipsum.network/")
+                .WithFooter("Please check you masternodes and wallet versions: Current Version: 3.1.0")
 
-                .AddField("//help", "shows available commands")
-                .AddField("//ipsum or //ips", "shows coin info")
-                .AddField("//guides or //guide", "replies with current installation guides")
-                .AddField("//mnstatus <pubkey> or //masternode <pubkey>", "checks the status of your masternode")
-                .AddField("//mnconnect <ip:port>", "checks the connection status of your masternode")
-                .AddField("//price <ticker> or //checkprice <ticker>", "replies with cmc price")
-                .AddField("//donate or //donations", "replies with IPS, BTC donation address and balances")
-                .AddField("//build", "replies with current wallet and masternode build");
+                .AddField("//ips", "Shows coin info")
+                .AddField("//guide", "Shows where all guides are located")
+                .AddField("//mnstatus <Pubkey>", "Shows you the status of corresponding address")
+                .AddField("//donate", "Shows you the Dev IPS and BTC donation address")
+                .AddField("For a full list of all chat bot commands:", "https://github.com/ipsum-network/ips-discord-support-bot/blob/master/BotCommands")
+                .AddField("For a full list of all windows / linux wallet commands:", "https://github.com/ipsum-network/guides/blob/master/Commands/Wallet%20Commands");
+
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.ReplyAsync(string.Empty, false, builder.Build());
+
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotTestingChannel)
+                .SendMessageAsync($"{this.Context.Message.Author.Mention}", false, builder.Build());
         }
 
         [Command("createpoll")]
