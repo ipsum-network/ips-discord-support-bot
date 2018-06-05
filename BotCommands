@@ -1,0 +1,87 @@
+# All commands avialable in the chat bot.
+  
+    ## Masternode related commands
+      *These commands will show the status of your masternode by checking the masternode address.
+      *You will need to enter the command followed by the masternode address as shown below.
+      ```
+      //mnstatus <Pubkey>
+      //masternode <Pubkey>
+      
+      ```
+      
+      *These commands will try to connect to your masternode VPS through RPC to make sure the vps is setup correctly
+       and communicating with the network properly.
+      *You will need to enter the command below followed by the VPS IP with a :22331 at the end of it.
+      
+      ```
+      //mnconnect <IP>:22331
+      //mnconstatus <IP>:22331
+      
+      ```
+    ## Price related commands
+      *These commands will show the current price of what ever coins you choose that is listed on Graviex currently.
+      *You will need to enter the command bellow followed by ticker of the coin you choose on Graviex.
+      
+      ```
+      //price <Ticker>
+      //checkprice <Ticker>
+      
+      ```
+      
+     ## Installation related commands
+        *These commands will show you the repository that holds all guides for setting up the wallet, masternodes and staking.
+        
+        ```
+        //guide
+        //guides
+        
+        ```
+        
+     ## Block explorer related commands
+        *This command will display the current difficulty and number of masternodes on the network.
+        
+        ```
+        //stats
+        
+        ```
+        
+        *This command will send you a private message with the corresponding balance of the address you enter.
+        *You will need to enter the command below followed by the address you want to know the balance of.
+        
+        ```
+        //balance <IPS Address>
+        
+        ```
+        
+     ## Develpment donation related commands
+        *These commands will display the development IPS and BTC address.
+        
+        ```
+        //donate
+        //donations
+        
+        ```
+     ## Current wallet build version commands
+        *These commands will show the current linux and windows wallet build/install
+        
+        ```
+        //build
+        //version
+        
+        ```
+        
+     ## IPSUM coin related commands
+        *These commands will display the website, current trading price and the current volume in BTC being traded.
+        
+        ```
+        //ipsum
+        //ips
+        
+        ```
+        
+     ## Wallet commands
+        * This command will show you a link to all linux and windows commands inside the wallet it self in debug console.
+        ```
+        //walletcommands
+       
+        ```
