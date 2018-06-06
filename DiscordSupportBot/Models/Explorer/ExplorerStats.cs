@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace DiscordSupportBot.Models.Explorer
 {
-    public class BlockStats
+    public class ExplorerStats
     {
         public const double blocksPerDay = 1440;
 
@@ -21,9 +21,16 @@ namespace DiscordSupportBot.Models.Explorer
 
         public const int fourthHalveStart = 151201;
         public const double fourthHalveReward = 9.0625;
-<<<<<<< HEAD
-=======
 
->>>>>>> bc29b685359f585a61856d95b33d0167f6229b9c
+        public float Difficulty;
+        public int MasternodeCount;
+        public int BlockHeight; 
+    }
+
+    public enum StatsDataType
+    {
+        Difficulty,
+        MasternodeCount,
+        BlockHeight
     }
 }

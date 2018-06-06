@@ -20,32 +20,21 @@ namespace DiscordSupportBot.Modules
         {
             int BlocksUntilHalve;
             double CurrentBlockReward;
-<<<<<<< HEAD
-            // const int test = 140000;
-=======
-           // const int test = 140000;
->>>>>>> bc29b685359f585a61856d95b33d0167f6229b9c
+            double DaysUntilHalve;
+            //const int test = 70000;
             var result = await this.GetStats();
 
             EmbedBuilder builder = new EmbedBuilder();
 
-            if (result.BlockHeight < BlockStats.firstHalveStart)
+            //if (test < ExplorerStats.firstHalveStart)
+            if (result.BlockHeight < ExplorerStats.firstHalveStart)
             {
-                BlocksUntilHalve = BlockStats.firstHalveStart - result.BlockHeight;
-                CurrentBlockReward = BlockStats.currentReward;
-
-                builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.AddInlineField("Difficulty", result.Difficulty);
-                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                builder.AddInlineField("Current Block Height", result.BlockHeight);
-                builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
-                builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
-                builder.AddInlineField("Days left until next halving", (BlockStats.firstHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 /100);
-            }
-            else if (result.BlockHeight < BlockStats.secondHalveStart)
-            {
-                BlocksUntilHalve = BlockStats.secondHalveStart - result.BlockHeight;
-                CurrentBlockReward = BlockStats.firstHalveReward;
+                //BlocksUntilHalve = ExplorerStats.firstHalveStart - test;
+                BlocksUntilHalve = ExplorerStats.firstHalveStart - result.BlockHeight;
+                CurrentBlockReward = ExplorerStats.firstHalveReward;
+                //DaysUntilHalve = (ExplorerStats.firstHalveStart - test) / ExplorerStats.blocksPerDay;
+                DaysUntilHalve = (ExplorerStats.firstHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
+                string resultDays = DaysUntilHalve.ToString("0.00");
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
@@ -53,29 +42,21 @@ namespace DiscordSupportBot.Modules
                 //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
+                builder.AddInlineField("Days left until next halving", resultDays);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
-                // builder.AddInlineField("Days left until next halving", (BlockStats.secondHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
-                builder.AddInlineField("Days left until next halving", (BlockStats.secondHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
+                builder.AddInlineField("Masternode Rewards", "70%");
+                builder.AddInlineField("Current Development Fee", "0%");
+                builder.AddInlineField("Staking Rewards", "30%");
             }
-            else if (result.BlockHeight < BlockStats.thirdHalveStart)
+            //else if (test < ExplorerStats.secondHalveStart)
+            else if (result.BlockHeight < ExplorerStats.secondHalveStart)
             {
-                BlocksUntilHalve = BlockStats.thirdHalveStart - result.BlockHeight;
-                CurrentBlockReward = BlockStats.secondHalveReward;
-
-                builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.AddInlineField("Difficulty", result.Difficulty);
-                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-               // builder.AddInlineField("Current Block Height", test);
-                builder.AddInlineField("Current Block Height", result.BlockHeight);
-                builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
-                builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
-                // builder.AddInlineField("Days left until next halving", (BlockStats.thirdHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
-                builder.AddInlineField("Days left until next halving", (BlockStats.thirdHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
-            }
-            else if (result.BlockHeight < BlockStats.fourthHalveStart)
-            {
-                BlocksUntilHalve = BlockStats.fourthHalveStart - result.BlockHeight;
-                CurrentBlockReward = BlockStats.thirdHalveReward;
+                //BlocksUntilHalve = ExplorerStats.secondHalveStart - test;
+                BlocksUntilHalve = ExplorerStats.secondHalveStart - result.BlockHeight;
+                CurrentBlockReward = ExplorerStats.secondHalveReward;
+                //DaysUntilHalve = (ExplorerStats.secondHalveStart - test) / ExplorerStats.blocksPerDay;
+                DaysUntilHalve = (ExplorerStats.secondHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
+                string resultDays = DaysUntilHalve.ToString("0.00");
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
@@ -83,21 +64,73 @@ namespace DiscordSupportBot.Modules
                 //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
+                builder.AddInlineField("Days left until next halving", resultDays);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
-                // builder.AddInlineField("Days left until next halving", (BlockStats.fourthHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
-                builder.AddInlineField("Days left until next halving", (BlockStats.fourthHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
+                builder.AddInlineField("Masternode Rewards", "70%");
+                builder.AddInlineField("Current Development Fee", "0%");
+                builder.AddInlineField("Staking Rewards", "30%");
             }
-            else if (result.BlockHeight > BlockStats.fourthHalveStart)
+            //else if (test < ExplorerStats.thirdHalveStart)
+            else if (result.BlockHeight < ExplorerStats.thirdHalveStart)
             {
+                //BlocksUntilHalve = ExplorerStats.thirdHalveStart - test;
+                BlocksUntilHalve = ExplorerStats.thirdHalveStart - result.BlockHeight;
+                CurrentBlockReward = ExplorerStats.thirdHalveReward;
+                //DaysUntilHalve = (ExplorerStats.thirdHalveStart - test) / ExplorerStats.blocksPerDay;
+                DaysUntilHalve = (ExplorerStats.thirdHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
+                string resultDays = DaysUntilHalve.ToString("0.00");
+
+                builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
+                builder.AddInlineField("Difficulty", result.Difficulty);
+                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
+                builder.AddInlineField("Current Block Height", result.BlockHeight);
+                builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
+                builder.AddInlineField("Days left until next halving", resultDays);
+                builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                builder.AddInlineField("Masternode Rewards", "70%");
+                builder.AddInlineField("Current Development Fee", "0%");
+                builder.AddInlineField("Staking Rewards", "30%");
+            }
+            //else if (test < ExplorerStats.fourthHalveStart)
+            else if (result.BlockHeight < ExplorerStats.fourthHalveStart)
+            {
+                //BlocksUntilHalve = ExplorerStats.fourthHalveStart - test;
+                BlocksUntilHalve = ExplorerStats.fourthHalveStart - result.BlockHeight;
+                CurrentBlockReward = ExplorerStats.thirdHalveReward;
+                //DaysUntilHalve = (ExplorerStats.fourthHalveStart - test) / ExplorerStats.blocksPerDay;
+                DaysUntilHalve = (ExplorerStats.fourthHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
+                string resultDays = DaysUntilHalve.ToString("0.00");
+
+                builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
+                builder.AddInlineField("Difficulty", result.Difficulty);
+                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
+                builder.AddInlineField("Current Block Height", result.BlockHeight);
+                builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
+                builder.AddInlineField("Days left until next halving", resultDays);
+                builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);                
+                builder.AddInlineField("Masternode Rewards", "70%");
+                builder.AddInlineField("Current Development Fee", "0%");
+                builder.AddInlineField("Staking Rewards", "30%");
+            }
+            //else if (test > ExplorerStats.fourthHalveStart)
+            else if (result.BlockHeight > ExplorerStats.fourthHalveStart)
+            {
+                //BlocksUntilHalve = test;
                 BlocksUntilHalve = result.BlockHeight;
-                CurrentBlockReward = BlockStats.fourthHalveReward;
+                CurrentBlockReward = ExplorerStats.fourthHalveReward;
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
+                builder.WithFooter("The halving is over.Thank you for sticking around this long");
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("The Current Block Height", test);
                 builder.AddInlineField("The Current Block Height", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
-                builder.AddInlineField("The halving is over. Thank you for sticking around this long.", "");
+                builder.AddInlineField("Masternode Rewards", "70%");
+                builder.AddInlineField("Current Development Fee", "0%");
+                builder.AddInlineField("Staking Rewards", "30%");
             }
 
             
@@ -132,14 +165,14 @@ namespace DiscordSupportBot.Modules
             return result.Result;
         }
 
-        private async Task<ExplorerStatsResponse> GetStats()
+        private async Task<ExplorerStats> GetStats()
         {
             var difficultyResponse = await client.GetAsync($"https://explorer.ipsum.network/api/getdifficulty");
             var masternodeResponse = await client.GetAsync($"https://explorer.ipsum.network/api/getmasternodecount");
             var supplyResponse = await client.GetAsync($"https://explorer.ipsum.network/api/getsupply");
             var blockResponse = await client.GetAsync($"https://explorer.ipsum.network/api/getblockcount");
 
-            var result = new ExplorerStatsResponse
+            var result = new ExplorerStats
             {
                 Difficulty = float.Parse(difficultyResponse.Content.ReadAsStringAsync().Result),
                 BlockHeight = int.Parse(blockResponse.Content.ReadAsStringAsync().Result),
@@ -147,20 +180,6 @@ namespace DiscordSupportBot.Modules
             };
 
             return result;
-        }
-
-        public class ExplorerStatsResponse
-        {
-            public float Difficulty { get; set; }
-            public int MasternodeCount { get; set; }
-            public int BlockHeight { get; set; }
-        }
-
-        public enum StatsDataType
-        {
-            Difficulty,
-            MasternodeCount,
-            BlockHeight
-        }
+        }        
     }
 }
