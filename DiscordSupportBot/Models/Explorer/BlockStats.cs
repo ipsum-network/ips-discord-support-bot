@@ -21,5 +21,9 @@ namespace DiscordSupportBot.Models.Explorer
 
         public const int fourthHalveStart = 151201;
         public const double fourthHalveReward = 9.0625;
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc29b685359f585a61856d95b33d0167f6229b9c
     }
 }

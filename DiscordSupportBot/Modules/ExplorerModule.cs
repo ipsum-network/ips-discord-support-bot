@@ -20,7 +20,11 @@ namespace DiscordSupportBot.Modules
         {
             int BlocksUntilHalve;
             double CurrentBlockReward;
+<<<<<<< HEAD
             // const int test = 140000;
+=======
+           // const int test = 140000;
+>>>>>>> bc29b685359f585a61856d95b33d0167f6229b9c
             var result = await this.GetStats();
 
             EmbedBuilder builder = new EmbedBuilder();
