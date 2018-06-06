@@ -19,7 +19,8 @@ namespace DiscordSupportBot.Modules
         public async Task Stats()
         {
             int BlocksUntilHalve;
-            int CurrentBlockReward;
+            double CurrentBlockReward;
+           // const int test = 140000;
             var result = await this.GetStats();
 
             EmbedBuilder builder = new EmbedBuilder();
@@ -44,6 +45,7 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
@@ -56,6 +58,7 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+               // builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
@@ -68,6 +71,7 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
