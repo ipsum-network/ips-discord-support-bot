@@ -19,7 +19,8 @@ namespace DiscordSupportBot.Modules
         public async Task Stats()
         {
             int BlocksUntilHalve;
-            int CurrentBlockReward;
+            double CurrentBlockReward;
+            // const int test = 140000;
             var result = await this.GetStats();
 
             EmbedBuilder builder = new EmbedBuilder();
@@ -35,6 +36,7 @@ namespace DiscordSupportBot.Modules
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                builder.AddInlineField("Days left until next halving", (BlockStats.firstHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 /100);
             }
             else if (result.BlockHeight < BlockStats.secondHalveStart)
             {
@@ -44,9 +46,12 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                // builder.AddInlineField("Days left until next halving", (BlockStats.secondHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
+                builder.AddInlineField("Days left until next halving", (BlockStats.secondHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
             }
             else if (result.BlockHeight < BlockStats.thirdHalveStart)
             {
@@ -56,9 +61,12 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+               // builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                // builder.AddInlineField("Days left until next halving", (BlockStats.thirdHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
+                builder.AddInlineField("Days left until next halving", (BlockStats.thirdHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
             }
             else if (result.BlockHeight < BlockStats.fourthHalveStart)
             {
@@ -68,9 +76,12 @@ namespace DiscordSupportBot.Modules
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
+                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
                 builder.AddInlineField("Blocks Until Next Halve", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                // builder.AddInlineField("Days left until next halving", (BlockStats.fourthHalveStart - test) / BlockStats.blocksPerDay * 100 /100);
+                builder.AddInlineField("Days left until next halving", (BlockStats.fourthHalveStart - result.BlockHeight) / BlockStats.blocksPerDay * 100 / 100);
             }
             else if (result.BlockHeight > BlockStats.fourthHalveStart)
             {
@@ -82,6 +93,7 @@ namespace DiscordSupportBot.Modules
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
                 builder.AddInlineField("The Current Block Height", BlocksUntilHalve);
                 builder.AddInlineField("Current Reward Per Block", CurrentBlockReward);
+                builder.AddInlineField("The halving is over. Thank you for sticking around this long.", "");
             }
 
             
