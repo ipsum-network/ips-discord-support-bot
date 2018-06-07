@@ -22,6 +22,10 @@ namespace DiscordSupportBot.Models.Explorer
         public const int fourthHalveStart = 151201;
         public const double fourthHalveReward = 9.0625;
 
+        public const double MasternodeReward = 0.70;
+        public const double StakingReward = 0.30;
+        public const double DevelopmentFee = 0.0;
+
         public float Difficulty;
         public int MasternodeCount;
         public int BlockHeight; 
