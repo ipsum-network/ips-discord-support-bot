@@ -20,128 +20,102 @@ namespace DiscordSupportBot.Modules
         {
             
             double DaysUntilHalve;
-            //const int test = 70000;
             var result = await this.GetStats();
 
             EmbedBuilder builder = new EmbedBuilder();
 
-            //if (test < ExplorerStats.firstHalveStart)
+            
             if (result.BlockHeight < ExplorerStats.firstHalveStart)
             {
-                //DaysUntilHalve = (ExplorerStats.firstHalveStart - test) / ExplorerStats.blocksPerDay;
                 DaysUntilHalve = (ExplorerStats.firstHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
-                //string resultDays = DaysUntilHalve.ToString("0.00");
                 TimeSpan timespan = TimeSpan.FromDays(DaysUntilHalve);
-                string resultDays = timespan.ToString("d\\:hh");
+                string resultDays = timespan.ToString("d\\:hh"); 
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.WithFooter("All block rewards are calculated on a 70% Masternode 30% Staking 0% Development Fee");
-                builder.AddInlineField("Difficulty", result.Difficulty);
-                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                //builder.AddInlineField("Current Block Height", test);
-                builder.AddInlineField("Current Block Height", result.BlockHeight);
-                //builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.firstHalveStart - test);
-                builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.firstHalveStart - result.BlockHeight);
-                builder.AddInlineField("Days:Hours until next halving", resultDays);
-                builder.AddInlineField("Current Reward Per Block", ExplorerStats.currentReward);
+                builder.WithFooter("All block rewards are split: 70% Masternode, 30% Staking and 0% Development fee");
+                builder.AddInlineField("Difficulty",result.Difficulty);
+                builder.AddInlineField("Masternodes Count",result.MasternodeCount);
+                builder.AddInlineField("Current Block Height",result.BlockHeight);
+                builder.AddInlineField("Blocks Until Next Halve",ExplorerStats.firstHalveStart - result.BlockHeight);
+                builder.AddInlineField("Days:Hours until next halving",resultDays);
+                builder.AddInlineField("Current Reward Per Block",ExplorerStats.currentReward);
                 builder.AddInlineField("Masternode Rewards",(ExplorerStats.currentReward * ExplorerStats.MasternodeReward));
-                builder.AddInlineField("Current Development", (ExplorerStats.currentReward * ExplorerStats.DevelopmentFee));
-                builder.AddInlineField("Staking Rewards", (ExplorerStats.currentReward * ExplorerStats.StakingReward));
+                builder.AddInlineField("Current Development Fee",(ExplorerStats.currentReward * ExplorerStats.DevelopmentFee));
+                builder.AddInlineField("Staking Rewards",(ExplorerStats.currentReward * ExplorerStats.StakingReward));
             }
-            //else if (test < ExplorerStats.secondHalveStart)
             else if (result.BlockHeight < ExplorerStats.secondHalveStart)
             {
-                //DaysUntilHalve = (ExplorerStats.secondHalveStart - test) / ExplorerStats.blocksPerDay;
                 DaysUntilHalve = (ExplorerStats.secondHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
-                //string resultDays = DaysUntilHalve.ToString("0.00");
                 TimeSpan timespan = TimeSpan.FromDays(DaysUntilHalve);
                 string resultDays = timespan.ToString("d\\:hh");
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.WithFooter("All block rewards are calculated on a 70% Masternode 30% Staking 0% Development Fee");
+                builder.WithFooter("All block rewards are split: 70% Masternode, 30% Staking and 0% Development fee");
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
-                //builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.secondHalveStart - test);
                 builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.secondHalveStart - result.BlockHeight);
                 builder.AddInlineField("Days:Hours until next halving", resultDays);
                 builder.AddInlineField("Current Reward Per Block", ExplorerStats.firstHalveReward);
                 builder.AddInlineField("Masternode Rewards", (ExplorerStats.firstHalveReward * ExplorerStats.MasternodeReward));
-                builder.AddInlineField("Current Development", (ExplorerStats.firstHalveReward * ExplorerStats.DevelopmentFee));
+                builder.AddInlineField("Current Development Fee", (ExplorerStats.firstHalveReward * ExplorerStats.DevelopmentFee));
                 builder.AddInlineField("Staking Rewards", (ExplorerStats.firstHalveReward * ExplorerStats.StakingReward));
             }
-            //else if (test < ExplorerStats.thirdHalveStart)
             else if (result.BlockHeight < ExplorerStats.thirdHalveStart)
             {
-                //DaysUntilHalve = (ExplorerStats.thirdHalveStart - test) / ExplorerStats.blocksPerDay;
                 DaysUntilHalve = (ExplorerStats.thirdHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
-                //string resultDays = DaysUntilHalve.ToString("0.00");
                 TimeSpan timespan = TimeSpan.FromDays(DaysUntilHalve);
                 string resultDays = timespan.ToString("d\\:hh");
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.WithFooter("All block rewards are calculated on a 70% Masternode 30% Staking 0% Development Fee");
+                builder.WithFooter("All block rewards are split: 70% Masternode, 30% Staking and 0% Development fee");
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
-                //builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.thirdHalveStart - test);
                 builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.thirdHalveStart - result.BlockHeight);
                 builder.AddInlineField("Days:Hours until next halving", resultDays);
                 builder.AddInlineField("Current Reward Per Block", ExplorerStats.secondHalveReward);
                 builder.AddInlineField("Masternode Rewards", (ExplorerStats.secondHalveReward * ExplorerStats.MasternodeReward));
-                builder.AddInlineField("Current Development", (ExplorerStats.secondHalveReward * ExplorerStats.DevelopmentFee));
+                builder.AddInlineField("Current Development Fee", (ExplorerStats.secondHalveReward * ExplorerStats.DevelopmentFee));
                 builder.AddInlineField("Staking Rewards", (ExplorerStats.secondHalveReward * ExplorerStats.StakingReward));
             }
-            //else if (test < ExplorerStats.fourthHalveStart)
             else if (result.BlockHeight < ExplorerStats.fourthHalveStart)
             {
-                //DaysUntilHalve = (ExplorerStats.fourthHalveStart - test) / ExplorerStats.blocksPerDay;
                 DaysUntilHalve = (ExplorerStats.fourthHalveStart - result.BlockHeight) / ExplorerStats.blocksPerDay;
-                //string resultDays = DaysUntilHalve.ToString("0.00");
                 TimeSpan timespan = TimeSpan.FromDays(DaysUntilHalve);
                 string resultDays = timespan.ToString("d\\:hh");
 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.WithFooter("All block rewards are calculated on a 70% Masternode 30% Staking 0% Development Fee");
+                builder.WithFooter("All block rewards are split: 70% Masternode, 30% Staking and 0% Development fee");
                 builder.AddInlineField("Difficulty", result.Difficulty);
                 builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                //builder.AddInlineField("Current Block Height", test);
                 builder.AddInlineField("Current Block Height", result.BlockHeight);
-                //builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.fourthHalveStart - test);
                 builder.AddInlineField("Blocks Until Next Halve", ExplorerStats.fourthHalveStart - result.BlockHeight);
                 builder.AddInlineField("Days:Hours until next halving", resultDays);
                 builder.AddInlineField("Current Reward Per Block", ExplorerStats.thirdHalveReward);
                 builder.AddInlineField("Masternode Rewards", (ExplorerStats.thirdHalveReward * ExplorerStats.MasternodeReward));
-                builder.AddInlineField("Current Development", (ExplorerStats.thirdHalveReward * ExplorerStats.DevelopmentFee));
+                builder.AddInlineField("Current Development Fee", (ExplorerStats.thirdHalveReward * ExplorerStats.DevelopmentFee));
                 builder.AddInlineField("Staking Rewards", (ExplorerStats.thirdHalveReward * ExplorerStats.StakingReward));
             }
-            //else if (test > ExplorerStats.fourthHalveStart)
             else if (result.BlockHeight > ExplorerStats.fourthHalveStart)
             {
                                                 
                 builder.WithTitle("Stats").WithColor(Discord.Color.Blue);
-                builder.WithFooter("All block rewards are calculated on a 70% Masternode 30% Staking 0% Development Fee");
-                builder.AddInlineField("Difficulty", result.Difficulty);
-                builder.AddInlineField("Masternodes Count", result.MasternodeCount);
-                //builder.AddInlineField("The Current Block Height", test);
-                builder.AddInlineField("The Current Block Height", result.BlockHeight);
-                builder.AddInlineField("Current Reward Per Block", ExplorerStats.fourthHalveReward);
-                builder.AddInlineField("Masternode Rewards", (ExplorerStats.fourthHalveReward * ExplorerStats.MasternodeReward));
-                builder.AddInlineField("Current Development", (ExplorerStats.fourthHalveReward * ExplorerStats.DevelopmentFee));
-                builder.AddInlineField("Staking Rewards", (ExplorerStats.fourthHalveReward * ExplorerStats.StakingReward));
+                builder.WithFooter("All block rewards are split: 70% Masternode, 30% Staking and 0% Development fee");
+                builder.AddInlineField("Difficulty",result.Difficulty);
+                builder.AddInlineField("Masternodes Count",result.MasternodeCount);
+                builder.AddInlineField("The Current Block Height",result.BlockHeight);
+                builder.AddInlineField("Current Reward Per Block",ExplorerStats.fourthHalveReward);
+                builder.AddInlineField("Masternode Rewards",(ExplorerStats.fourthHalveReward * ExplorerStats.MasternodeReward));
+                builder.AddInlineField("Current Development Fee",(ExplorerStats.fourthHalveReward * ExplorerStats.DevelopmentFee));
+                builder.AddInlineField("Staking Rewards",(ExplorerStats.fourthHalveReward * ExplorerStats.StakingReward));
             }
 
             
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
 
-
-            await this.ReplyAsync(string.Empty, false, builder.Build());
-           // var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
-
-           // await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
-              //  .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
         [Command("balance")]
