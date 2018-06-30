@@ -7,7 +7,7 @@
     using System;
     using System.Reflection;
     using System.Threading.Tasks;
-    using DiscordSupportBot.Common;
+    using DiscordSupportBot.Common.Extensions;
 
     class Program
     {
@@ -25,7 +25,6 @@
             this.Services = new ServiceCollection()
                 .AddSingleton(this.Client)
                 .AddSingleton(this.Commands)
-                .AddDbContext<DiscordSupportBot.DAL.Context.DiscordSupportBotDbContext>()
                 .BuildServiceProvider();
 
             var botToken = "";
@@ -58,9 +57,7 @@
 
         private async Task HandleCommandAsync(SocketMessage arg)
         {
-            var msg = arg as SocketUserMessage;
-
-            if (msg == null || msg.Author.IsBot)
+            if (!(arg is SocketUserMessage msg) || msg.Author.IsBot)
             {
                 return;
             }

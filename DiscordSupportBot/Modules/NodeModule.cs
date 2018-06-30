@@ -3,6 +3,8 @@ namespace DiscordSupportBot.Modules
     using Common;
     using Discord;
     using Discord.Commands;
+    using DiscordSupportBot.Common.Constants;
+    using DiscordSupportBot.Common.Extensions;
     using DiscordSupportBot.Models.BaseModels;
     using DiscordSupportBot.Models.Masternode;
     using Newtonsoft.Json;
@@ -21,7 +23,7 @@ namespace DiscordSupportBot.Modules
         {
             var result = JsonRpcClient.InvokeMethod("getinfo");
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync($"{JsonConvert.DeserializeObject<dynamic>(result).ToString()}");
         }
 
@@ -35,9 +37,9 @@ namespace DiscordSupportBot.Modules
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
                 : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTimeLastPaid()}```";
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
         }
 
@@ -51,9 +53,9 @@ namespace DiscordSupportBot.Modules
                 ? $"```Connection to {ipPort} was successful!```"
                 : $"```Connection to {ipPort} was unsuccessul, reason: {result.Error.Message}```";
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
         }
 

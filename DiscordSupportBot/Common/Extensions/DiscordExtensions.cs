@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Discord.WebSocket;
 
-namespace DiscordSupportBot.Common
+namespace DiscordSupportBot.Common.Extensions
 {
     public static class DiscordExtensions
     {

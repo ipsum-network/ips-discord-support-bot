@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 
 
-namespace DiscordSupportBot.Common
+namespace DiscordSupportBot.Common.Extensions
 {
     public static class Extensions
     {

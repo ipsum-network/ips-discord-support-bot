@@ -4,6 +4,8 @@ namespace DiscordSupportBot.Modules
     using Discord.Commands;
     using Discord.WebSocket;
     using DiscordSupportBot.Common;
+    using DiscordSupportBot.Common.Constants;
+    using DiscordSupportBot.Common.Extensions;
     using DiscordSupportBot.Models.Exchanges;
     using DiscordSupportBot.Models.Github;
     using Newtonsoft.Json;
@@ -16,7 +18,7 @@ namespace DiscordSupportBot.Modules
 
     public class GeneralModule : ModuleBase<SocketCommandContext>
     {
-        private string[] VoteOptions = { "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣", "🔟" };
+        private readonly string[] VoteOptions = { "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣", "🔟" };
         private static HttpClient client = new HttpClient();
 
         [Command("help")]
@@ -25,7 +27,7 @@ namespace DiscordSupportBot.Modules
             var builder = new EmbedBuilder();
 
             builder.WithTitle("Ipsum Bot Help")
-                .WithColor(Discord.Color.Blue)
+                .WithColor(Color.Blue)
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                 .WithFooter("https://ipsum.network/")
 
@@ -38,9 +40,9 @@ namespace DiscordSupportBot.Modules
                 .AddField("//donate or //donations", "replies with IPS, BTC donation address and balances")
                 .AddField("//build", "replies with current wallet and masternode build");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
@@ -58,9 +60,9 @@ namespace DiscordSupportBot.Modules
 
                 builder.WithTitle($"{question.Trim('?')}?")
                     .WithDescription(optionsList)
-                    .WithColor(Discord.Color.Blue);
+                    .WithColor(Color.Blue);
 
-                var message = await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotPollChannel)
+                var message = await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotPollChannel)
                     .SendMessageAsync(string.Empty, false, builder.Build());
 
                 for (int i = 0; i < options.Length; i++)
@@ -87,7 +89,7 @@ namespace DiscordSupportBot.Modules
                 .WithCurrentTimestamp()
                 .WithFooter("https://ipsum.network/")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithColor(Discord.Color.Blue);
+                .WithColor(Color.Blue);
 
             if (data.Result.Success)
             {
@@ -102,10 +104,9 @@ namespace DiscordSupportBot.Modules
                     .AddField("", "could not retrieve data from exchange");
             }
 
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
@@ -116,7 +117,7 @@ namespace DiscordSupportBot.Modules
             var builder = new EmbedBuilder();
 
             builder.WithTitle("Master List of Guides")
-                .WithColor(Discord.Color.Blue)
+                .WithColor(Color.Blue)
                 .WithDescription("\u200b")
                 .WithUrl("https://github.com/ipsum-network/guides")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
@@ -125,10 +126,9 @@ namespace DiscordSupportBot.Modules
                 .AddField("Full list of all guides:", "https://github.com/ipsum-network/guides")
                 .AddField("Configuration Seed List:", "https://github.com/ipsum-network/seeds");
 
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
@@ -142,7 +142,7 @@ namespace DiscordSupportBot.Modules
             var dataIps = this.GetIpsDonationAddressBalance("iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt");
 
             builder.WithTitle("")
-                .WithColor(Discord.Color.Blue)
+                .WithColor(Color.Blue)
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                 .AddField("Donations will be used for:", "Exchange Listings, Development, and Infrastructure")
                 .AddField("IPS Donation Address:", "iSv6vXhSbb7WH8D3dVHuWecZ7pGj4AJMmt")
@@ -151,9 +151,9 @@ namespace DiscordSupportBot.Modules
                 .AddField("Current BTC donation balance:", $"{dataBtc.Result} BTC")
                 .AddField("Current IPS donation balance:", $"{dataIps.Result} IPS");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
@@ -168,7 +168,7 @@ namespace DiscordSupportBot.Modules
             if (data.Result != null)
             {
                 builder.WithTitle($"The current build is: {data.Result.ReleaseName} - {data.Result.TagName}")
-                    .WithColor(Discord.Color.Blue)
+                    .WithColor(Color.Blue)
                     .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                     .WithDescription("\u200b")
                     .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
@@ -176,15 +176,15 @@ namespace DiscordSupportBot.Modules
             else
             {
                 builder.WithTitle($"Bot was not able to get the latest version, please check the link below for latest release")
-                    .WithColor(Discord.Color.Blue)
+                    .WithColor(Color.Blue)
                     .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                     .WithDescription("\u200b")
                     .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
             }
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordSupportBot.Common.DiscordData.BotChannel);
+            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
-            await this.Context.Guild.GetTextChannel(DiscordSupportBot.Common.DiscordData.BotChannel)
+            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
                 .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
         }
 
