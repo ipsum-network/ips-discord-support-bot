@@ -5,30 +5,8 @@ using DiscordSupportBot.Models.BaseModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-/*
+namespace DiscordSupportBot.Models.Exchanges
 {
-"Error": null,
-"Tickers": [
-{
-"PairId": 422,
-"PairName": "BTC_IPS",
-"Last": 0.000004000000000,
-"LowPrice": 0.000002910000000,
-"HighPrice": 0.000011500000000,
-"PercentChange": -60.0400,
-"BaseVolume": 0.3147625627072927079200000000,
-"QuoteVolume": 36001.842157842158000,
-"VolumeInBtc": 0.3147625627072927079200000000,
-"VolumeInUsd": 2208.3720251439295531455135796
-}
-]
-}
-*/
-namespace DiscordSupportBot.Models.Exchanges.Crex
-{
-
-
     public partial class Crex
     {
         [JsonProperty("Error")]
@@ -70,8 +48,5 @@ namespace DiscordSupportBot.Models.Exchanges.Crex
 
         [JsonProperty("VolumeInUsd")]
         public string CrexVolumeInUsd { get; set; }
-
     }
-
-    
 }

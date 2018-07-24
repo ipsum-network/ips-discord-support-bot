@@ -18,5 +18,14 @@ namespace DiscordSupportBot.Models.Exchanges
 
         [JsonProperty("volbtc")]
         public string VolumeBtc { get; set; }
+
+        [JsonProperty("vol")]
+        public string VolumeIps { get; set; }
+
+        [JsonProperty("low")]
+        public string Low { get; set; }
+
+        [JsonProperty("high")]
+        public string High { get; set; }
     }
 }

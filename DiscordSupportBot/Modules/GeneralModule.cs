@@ -80,29 +80,28 @@ namespace DiscordSupportBot.Modules
         [Alias("ips")]
         public async Task Ipsum()
         {
-            var crexdata = this.GetCrexData();
-            var data = this.GetGraviexData();
-
+            var crexData = await this.GetCrexData();
+            var graviexData = await this.GetGraviexData();
 
             var builder = new EmbedBuilder();
-
 
             builder.WithTitle("Comparison of Crex24 and Graviex Prices / Volumes")
                 .WithCurrentTimestamp()
                 .WithFooter("https://ipsum.network/")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithColor(Discord.Color.Blue)
-                .AddField("\u200b", "Crex Data Below")
-                .AddInlineField("Last BTC Price", $"{crexdata.Result.Tickers[0].CrexLast.Remove(11)}")
-                .AddInlineField("Percentage Change", $"{crexdata.Result.Tickers[0].CrexPercentChange.ToString()}%")
-                .AddInlineField("Todays Days BTC Low", $"{crexdata.Result.Tickers[0].CrexLowPrice.Remove(11)}")
-                .AddInlineField("Todays Days BTC High", $"{crexdata.Result.Tickers[0].CrexHighPrice.Remove(11)}")
-                .AddInlineField("Todays Volume BTC", $"{crexdata.Result.Tickers[0].CrexVolumeInBtc.Remove(13)}")
-                .AddInlineField("Todays Volume USD", $"${crexdata.Result.Tickers[0].CrexVolumeInUsd.Remove(10)}")
-                .AddField("\u200b", "Graviex Data Below")
-                .AddInlineField("Price", $"{data.Result.Ticker.Last.ToString()}")
-                .AddInlineField("Volume BTC", $"{data.Result.Ticker.VolumeBtc.ToString()}");
-
+                .WithColor(Color.Blue)
+                .AddField("\u200b", "Crex")
+                .AddInlineField("Price", $"{crexData.Tickers[0].CrexLast.Remove(11)}")
+                .AddInlineField("Volume BTC", $"{crexData.Tickers[0].CrexVolumeInBtc.Remove(13)}")
+                .AddInlineField("Volume USD", $"${crexData.Tickers[0].CrexVolumeInUsd.Remove(10)}")
+                .AddInlineField("BTC Low", $"{crexData.Tickers[0].CrexLowPrice.Remove(11)}")
+                .AddInlineField("BTC High", $"{crexData.Tickers[0].CrexHighPrice.Remove(11)}")
+                .AddField("\u200b", "Graviex")
+                .AddInlineField("Price", $"{graviexData.Ticker.Last.ToString()}")
+                .AddInlineField("Volume BTC", $"{graviexData.Ticker.VolumeBtc.ToString()}")
+                .AddInlineField("Volume IPS", $"{graviexData.Ticker.VolumeIps.ToString()}")
+                .AddInlineField("BTC Low", $"{graviexData.Ticker.Low.ToString()}")
+                .AddInlineField("BTC High", $"{graviexData.Ticker.High.ToString()}");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
