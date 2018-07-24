@@ -80,29 +80,29 @@ namespace DiscordSupportBot.Modules
         [Alias("ips")]
         public async Task Ipsum()
         {
+            var crexdata = this.GetCrexData();
             var data = this.GetGraviexData();
+
 
             var builder = new EmbedBuilder();
 
-            builder.WithTitle("Ipsum [IPS]")
-                .WithDescription("\u200b")
+
+            builder.WithTitle("Comparison of Crex24 and Graviex Prices / Volumes")
                 .WithCurrentTimestamp()
                 .WithFooter("https://ipsum.network/")
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
-                .WithColor(Color.Blue);
+                .WithColor(Discord.Color.Blue)
+                .AddField("\u200b", "Crex Data Below")
+                .AddInlineField("Last BTC Price", $"{crexdata.Result.Tickers[0].CrexLast.Remove(11)}")
+                .AddInlineField("Percentage Change", $"{crexdata.Result.Tickers[0].CrexPercentChange.ToString()}%")
+                .AddInlineField("Todays Days BTC Low", $"{crexdata.Result.Tickers[0].CrexLowPrice.Remove(11)}")
+                .AddInlineField("Todays Days BTC High", $"{crexdata.Result.Tickers[0].CrexHighPrice.Remove(11)}")
+                .AddInlineField("Todays Volume BTC", $"{crexdata.Result.Tickers[0].CrexVolumeInBtc.Remove(13)}")
+                .AddInlineField("Todays Volume USD", $"${crexdata.Result.Tickers[0].CrexVolumeInUsd.Remove(10)}")
+                .AddField("\u200b", "Graviex Data Below")
+                .AddInlineField("Price", $"{data.Result.Ticker.Last.ToString()}")
+                .AddInlineField("Volume BTC", $"{data.Result.Ticker.VolumeBtc.ToString()}");
 
-            if (data.Result.Success)
-            {
-                builder
-                    .AddInlineField("Time", $"{data.Result.TimeOfUpdate.ParseEpochToDateTime().ToString()}")
-                    .AddInlineField("Price", $"{data.Result.Ticker.Last.ToString()}")
-                    .AddInlineField("Volume BTC", $"{data.Result.Ticker.VolumeBtc.ToString()}");
-            }
-            else
-            {
-                builder
-                    .AddField("", "could not retrieve data from exchange");
-            }
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 
@@ -206,6 +206,14 @@ namespace DiscordSupportBot.Modules
             var result = JsonConvert.DeserializeObject<Graviex>(response.ToString());
 
             return result;
+        }
+
+        private async Task<Crex> GetCrexData()
+        {
+            var response = await client.GetStringAsync($"https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_IPS].json");
+            var crexresult = JsonConvert.DeserializeObject<Crex>(response);
+
+            return crexresult;
         }
 
         private async Task<GithubRelease> GetGithubReleaseData()
