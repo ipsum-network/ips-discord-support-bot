@@ -91,17 +91,17 @@ namespace DiscordSupportBot.Modules
                 .WithThumbnailUrl("https://masternodes.online/coin_image/IPS.png")
                 .WithColor(Color.Blue)
                 .AddField("\u200b", "Crex")
-                .AddInlineField("Price", $"{crexData.Tickers[0].CrexLast.Remove(11)}")
-                .AddInlineField("Volume BTC", $"{crexData.Tickers[0].CrexVolumeInBtc.Remove(13)}")
-                .AddInlineField("Volume USD", $"${crexData.Tickers[0].CrexVolumeInUsd.Remove(10)}")
-                .AddInlineField("BTC Low", $"{crexData.Tickers[0].CrexLowPrice.Remove(11)}")
-                .AddInlineField("BTC High", $"{crexData.Tickers[0].CrexHighPrice.Remove(11)}")
+                .AddInlineField("Price", $"{crexData.Tickers[0].CrexLast.DecimalToString()}")
+                .AddInlineField("24h Volume BTC", $"{crexData.Tickers[0].CrexVolumeInBtc.DecimalToString()}")
+                .AddInlineField("24h Volume USD", $"${crexData.Tickers[0].CrexVolumeInUsd.DecimalToString()}")
+                .AddInlineField("24h BTC Low", $"{crexData.Tickers[0].CrexLowPrice.DecimalToString()}")
+                .AddInlineField("24h BTC High", $"{crexData.Tickers[0].CrexHighPrice.DecimalToString()}")
                 .AddField("\u200b", "Graviex")
                 .AddInlineField("Price", $"{graviexData.Ticker.Last.ToString()}")
-                .AddInlineField("Volume BTC", $"{graviexData.Ticker.VolumeBtc.ToString()}")
-                .AddInlineField("Volume IPS", $"{graviexData.Ticker.VolumeIps.ToString()}")
-                .AddInlineField("BTC Low", $"{graviexData.Ticker.Low.ToString()}")
-                .AddInlineField("BTC High", $"{graviexData.Ticker.High.ToString()}");
+                .AddInlineField("24h Volume BTC", $"{graviexData.Ticker.VolumeBtc.ToString()}")
+                .AddInlineField("24h Volume IPS", $"{graviexData.Ticker.VolumeIps.ToString()}")
+                .AddInlineField("24h BTC Low", $"{graviexData.Ticker.Low.ToString()}")
+                .AddInlineField("24h BTC High", $"{graviexData.Ticker.High.ToString()}");
 
             var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
 

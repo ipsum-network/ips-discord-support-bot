@@ -26,27 +26,27 @@ namespace DiscordSupportBot.Models.Exchanges
         public string CrexPairName { get; set; }
 
         [JsonProperty("Last")]
-        public string CrexLast { get; set; }
+        public decimal CrexLast { get; set; }
 
         [JsonProperty("LowPrice")]
-        public string CrexLowPrice { get; set; }
+        public decimal CrexLowPrice { get; set; }
 
         [JsonProperty("HighPrice")]
-        public string CrexHighPrice { get; set; }
+        public decimal CrexHighPrice { get; set; }
 
         [JsonProperty("PercentChange")]
-        public string CrexPercentChange { get; set; }
+        public decimal CrexPercentChange { get; set; }
 
         [JsonProperty("BaseVolume")]
-        public string CrexBaseVolume { get; set; }
+        public decimal CrexBaseVolume { get; set; }
 
         [JsonProperty("QuoteVolume")]
-        public string CrexQuoteVolume { get; set; }
+        public decimal CrexQuoteVolume { get; set; }
 
         [JsonProperty("VolumeInBtc")]
-        public string CrexVolumeInBtc { get; set; }
+        public decimal CrexVolumeInBtc { get; set; }
 
         [JsonProperty("VolumeInUsd")]
-        public string CrexVolumeInUsd { get; set; }
+        public decimal CrexVolumeInUsd { get; set; }
     }
 }
