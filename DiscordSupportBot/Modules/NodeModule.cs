@@ -37,10 +37,7 @@ namespace DiscordSupportBot.Modules
                 ? "Sorry, that Masternode adress was not found in the masternode list!"
                 : $"```Rank: {result.Rank}\nStatus: {result.Status}\nAddress: {result.Address}\nVersion: {result.Version}\nLast Seen: {result.LastSeen.ParseEpochToDateTime()}\nLast Paid: {result.LastPaid.ParseEpochToDateTimeLastPaid()}```";
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
+            await this.Context.SendMessageViaContext(resultString);
         }
 
         [Command("mnconnect")]
@@ -53,10 +50,7 @@ namespace DiscordSupportBot.Modules
                 ? $"```Connection to {ipPort} was successful!```"
                 : $"```Connection to {ipPort} was unsuccessul, reason: {result.Error.Message}```";
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
+            await this.Context.SendMessageViaContext(resultString);
         }
 
         private Masternode GetMasternodeStatus(string pubKey)

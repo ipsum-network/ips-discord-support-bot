@@ -40,10 +40,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("//donate or //donations", "replies with IPS, BTC donation address and balances")
                 .AddField("//build", "replies with current wallet and masternode build");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         [Command("createpoll")]
@@ -103,10 +100,7 @@ namespace DiscordSupportBot.Modules
                 .AddInlineField("24h BTC Low", $"{graviexData.Ticker.Low.ToString()}")
                 .AddInlineField("24h BTC High", $"{graviexData.Ticker.High.ToString()}");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         [Command("guide")]
@@ -125,10 +119,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("Full list of all guides:", "https://github.com/ipsum-network/guides")
                 .AddField("Configuration Seed List:", "https://github.com/ipsum-network/seeds");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         [Command("donate")]
@@ -150,10 +141,7 @@ namespace DiscordSupportBot.Modules
                 .AddField("Current BTC donation balance:", $"{dataBtc.Result} BTC")
                 .AddField("Current IPS donation balance:", $"{dataIps.Result} IPS");
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         [Command("build")]
@@ -181,10 +169,7 @@ namespace DiscordSupportBot.Modules
                     .AddField("Please update your wallets and masternodes!", "https://github.com/ipsum-network/ips/releases");
             }
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         private string GetVoteOptions(string[] options)

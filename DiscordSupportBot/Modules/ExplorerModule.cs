@@ -11,6 +11,7 @@ namespace DiscordSupportBot.Modules
     using DiscordSupportBot.Common.Constants;
     using System.Threading.Tasks;
     using System.Net.Http;
+    using DiscordSupportBot.Common.Extensions;
 
     public class ExplorerModule : ModuleBase<SocketCommandContext>
     {
@@ -61,10 +62,7 @@ namespace DiscordSupportBot.Modules
             builder.AddInlineField("Current Development Fee", (ExplorerModuleConstants.currentReward * ExplorerModuleConstants.DevelopmentFee));
             builder.AddInlineField("Staking Rewards", (ExplorerModuleConstants.currentReward * ExplorerModuleConstants.StakingReward));
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync(isBotChannel ? string.Empty : this.Context.Message.Author.Mention, false, builder.Build());
+            await this.Context.SendEmbedMessageViaContext(builder.Build());
         }
 
         [Command("balance")]

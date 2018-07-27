@@ -4,6 +4,7 @@ namespace DiscordSupportBot.Modules
     using Discord.Commands;
     using DiscordSupportBot.Common;
     using DiscordSupportBot.Common.Constants;
+    using DiscordSupportBot.Common.Extensions;
     using DiscordSupportBot.Models.CoinMarketCap;
     using DiscordSupportBot.Models.Exchanges;
     using Newtonsoft.Json;
@@ -42,10 +43,7 @@ namespace DiscordSupportBot.Modules
                     : $"```Currency: {prices.CoinData.Name}\nTicker: {prices.CoinData.Symbol}\nPrice USD: {prices.CoinData.Quotes.PriceUSD.Price}\nChange(24h): {prices.CoinData.Quotes.PriceUSD.PercentChange24h}%```"
                 : $"Could not get the price.";
 
-            var isBotChannel = this.Context.Channel.Id.Equals(DiscordDataConstants.BotChannel);
-
-            await this.Context.Guild.GetTextChannel(DiscordDataConstants.BotChannel)
-                .SendMessageAsync($"{(isBotChannel ? resultString : $"{this.Context.Message.Author.Mention} {resultString}")}");
+            await this.Context.SendMessageViaContext(resultString);
         }
 
         public async Task<Listings> GetListings()
